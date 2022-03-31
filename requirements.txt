@@ -1,0 +1,9 @@
+asgiref
+Django
+django-crispy-forms
+django-shopping-cart
+Pillow
+psycopg2-binary
+python-decouple
+pytz
+sqlparse
