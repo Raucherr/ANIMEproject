@@ -7,8 +7,8 @@ def send_welcome_email(email):
     send_mail(
         'AnimeShop Welcome!!!',
         message,
-        'pyshopadmin@gmail.com',
-        [email,],
+        'shnicelv@gmail.com',
+        [email],
         fail_silently=False
     )
 

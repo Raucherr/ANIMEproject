@@ -1,0 +1,50 @@
+{% extends 'home_page.html' %}
+{% load static %}
+
+{% block content %}
+  <!-- review here -->
+        <div class="reviews-navigation">
+            <h3 class="review-title">Reviews:</h3>
+            <button class="btn btn-light add-review__btn" data-bs-toggle="modal" data-bs-target="#staticBackdropReview">Add review</button>
+        </div>
+        <div class="reviews">
+            {% for review in product.review.all %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review.author.username }}</h5>
+                        <h6 class="card-subtitle mb-2">{{ review.title }}</h6>
+                        <p class="card-text">{{ review.description }}</p>
+                        <p class="card-text">{{ review.rating }}</p>
+                        {% if request.user == review.author %}
+                            <a href="{% url 'update-review' pk=review.id %}" class="btn btn-light">Edit</a>
+                            <a href="{% url 'delete-review' pk=review.id %}" class="btn btn-light">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- end review -->
+
+        <!--    review modal    -->
+        <div class="modal fade" id="staticBackdropReview" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add review modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="post" class="add-review-form" action="{% url 'add-review' product.id %}">
+                    {% csrf_token %}
+                    <input type="text" name="title" placeholder="Enter review title...">
+                    <input type="text" name="description" placeholder="Enter review description...">
+                    <input type="number" name="rating" placeholder="Enter review rating...">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    end review modal    -->
+    </div>
+{% endblock content %}

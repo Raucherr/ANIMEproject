@@ -4,6 +4,14 @@ from .models import Product, Category
 
 admin.site.register(Category)
 admin.site.register(Product)
-
-#TODO: создать категории Smartphones(Samsung, Iphone, Xiaomi),
-# Notebooks(MacBook, ASUS, Acer), Earphones
+#
+#
+# @admin.register(Comment)
+# class CommentAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'body', 'post', 'created_on', 'active')
+#     list_filter = ('active', 'created_on')
+#     search_fields = ('name', 'email', 'body')
+#     actions = ['approve_comments']
+#
+#     def approve_comments(self, request, queryset):
+#         queryset.update(active=True)

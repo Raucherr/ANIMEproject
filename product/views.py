@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import CreateView
 
 from .forms import CreateProductForm, UpdateProductForm
 from .models import Category, Product
@@ -52,63 +53,43 @@ def cart_detail(request):
     return render(request, 'cart/cart_detail.html')
 
 
-
-
-
-
-
-
-
-# def home_page(request):
-#     categories = Category.objects.all()
-#     # SELECT * FROM category
-#     return render(request, 'products/home.html',
-#                   {'categories': categories})
-#
-#
-# def product_list(request, slug):
-#     products = Product.objects.filter(category__slug=slug)
-#     return render(request, 'products/list.html', {'products': products})
-#
-#
-# def product_detail(request, id):
-#     product = Product.objects.get(id=id)
-#     return render(request, 'products/detail.html', {'product': product})
-#
-#
-# def create_product(request):
+# def post_detail(request, slug):
+#     template_name = 'cart_detail.html'
+#     product = get_object_or_404(Product, slug=slug)
+#     comments = product.comments.filter(active=True)
+#     new_comment = None
+#     # Comment posted
 #     if request.method == 'POST':
-#         # print(request.POST) # {"name": "Samsung"}
-#         product_form = CreateProductForm(request.POST, request.FILES)
-#         if product_form.is_valid():
-#             product = product_form.save()
-#             return redirect(product.get_absolute_url())
+#         comment_form = CommentForm(data=request.POST)
+#         if comment_form.is_valid():
+#
+#             # Create Comment object but don't save to database yet
+#             new_comment = comment_form.save(commit=False)
+#             # Assign the current post to the comment
+#             new_comment.product = product
+#             # Save the comment to the database
+#             new_comment.save()
 #     else:
-#         product_form = CreateProductForm()
-#     return render(request, 'products/create_product.html',
-#                   {'product_form': product_form})
+#         comment_form = CommentForm()
 #
+#     return render(request, template_name, {'product': product,
+#                                            'comments': comments,
+#                                            'new_comment': new_comment,
+#                                            'comment_form': comment_form})
 #
-# def update_product(request, id):
-#     product = get_object_or_404(Product, pk=id)
-#     product_form = UpdateProductForm(request.POST or None, request.FILES or None,
-#                                      instance=product)
-#     if product_form.is_valid():
-#         product_form.save()
-#         return redirect(product.get_absolute_url())
-#
-#     return render(request, 'products/update_product.html',
-#                   {'product_form': product_form})
-#
-#
-# def delete_product(request, id):
-#     product = get_object_or_404(Product, pk=id)
-#     if request.method == 'POST':
-#         slug = product.category.slug
-#         product.delete()
-#         return redirect('list', slug)
-#     return render(request, 'products/delete_product.html', {'product': product})
 
-
-
-
+# def add_comment_to_post(request, pk):
+#     product = get_object_or_404(Product, pk=pk)
+#     if request.method == "POST":
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.product = product
+#             comment.save()
+#             return redirect('detail', pk=product.pk)
+#     else:
+#         form = CommentForm()
+#     return render(request, 'products/add_comment_to_post.html', {'form': form})
+#
+#
+#
